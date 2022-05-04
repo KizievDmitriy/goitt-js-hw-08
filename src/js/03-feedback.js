@@ -1,4 +1,5 @@
 import throttle from 'lodash.throttle';
+import alert from 'alert';
 
 const formRef = document.querySelector('.feedback-form');
 const inputRef = document.querySelector('[name="email"]');
@@ -20,12 +21,15 @@ formRef.addEventListener('submit', onSubmitHandler);
 
 function onSubmitHandler(e) {
   e.preventDefault();
-  
-  const formData = new FormData(formRef);
-  formData.forEach((value, name) => console.log(value, name));
+  if (e.currentTarget.email.value === '' || e.currentTarget.message.value === '') {
+    alert('Все поля необходимо заполнить!!!');  
+  } else {
+    const formData = new FormData(formRef);
+    formData.forEach((value, name) => console.log(value, name));
 
-  localStorage.removeItem('feedback-form-state');
-  e.currentTarget.reset();
+    localStorage.removeItem('feedback-form-state');
+    e.currentTarget.reset();
+  }
 };
 
 function onResetPage() {
